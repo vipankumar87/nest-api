@@ -12,9 +12,18 @@ import { CurrierModule } from './currier/currier.module';
 import { AuthModule } from './auth/auth.module';
 import {ThrottlerModule} from "@nestjs/throttler";
 
+let envFilePath = '.env';
+console.info(`Running in ${process.env.MODE}`);
+if( process.env.MODE == 'development'){
+  envFilePath = '.env.development';
+} else if(process.env.MODE == 'production'){
+  envFilePath = '.env.production';
+}
+envFilePath = '.env';
+
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ envFilePath }),
     ThrottlerModule.forRoot({
       ttl: 60,
       limit: 10,

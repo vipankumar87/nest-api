@@ -13,6 +13,7 @@ import { AuthCredentialsDto } from './dto/auth.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import {ApiBody} from "@nestjs/swagger";
+import {AuthenticatedGuard} from "./guards/authenticated.guard";
 
 @Controller('auth')
 export class AuthController {
@@ -29,12 +30,17 @@ export class AuthController {
   @Post('signin')
   @ApiBody({ type: AuthCredentialsDto })
   async signIn(@Request() req, @Body(ValidationPipe) user: AuthCredentialsDto) {
-    return this.authService.signIn(req.user);
+    return req.user;
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthenticatedGuard)
   @Get('me')
   getMe(@Request() req) {
     return req.user;
+  }
+
+  @Get('redirect')
+  redirect(@Request() req:Request):any{
+
   }
 }
