@@ -7,10 +7,10 @@ export class Role {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ Default: Date.now() })
-  created_at: Date;
+  @Prop({ Default: Date.now(), required: false })
+  created_at?: Date;
 
-  @Prop()
-  status: boolean;
+  @Prop({Default: true, required: false })
+  status?: boolean;
 }
 export const RoleSchema = SchemaFactory.createForClass(Role);

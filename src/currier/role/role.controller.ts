@@ -14,7 +14,7 @@ export class RoleController {
 
   @Get()
   findAll() {
-    return this.roleService.findAll();
+    return this.roleService.findAll({});
   }
 
   @Get(':id')
